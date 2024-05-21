@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef DIFF_ROBOT_CONTROL__MOTOR_HPP_
+#define DIFF_ROBOT_CONTROL__MOTOR_HPP_
+
 #include <memory>
 #include <tuple>
 
@@ -12,13 +15,14 @@ using MotorPins = std::tuple<u8, u8, u8>;
 class Motor {
  public:
   Motor() = default;
-  Motor(I2CDevicePtr i2c, MotorPins pins, uint32_t motor_number);
+  Motor(I2CDevicePtr i2c, MotorPins pins, std::string name);
   ~Motor();
-  bool trySetSpinning(bool spinning);
+  bool trySetVelocity(double velocity);
 
  private:
   I2CDevicePtr i2c_;
   MotorPins pins_;
-  uint32_t motor_number_;
+  std::string name_;
 };
- // namespace JetBotControl
+
+#endif  // JETBOT_CONTROL__MOTOR_HPP_

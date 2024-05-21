@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include <cstdio>
+#include <iostream>
 #include <thread>
 
 const uint8_t kDefaultDeviceAddress = 0x60;
@@ -71,10 +72,10 @@ bool I2CDevice::trySetDutyCycle(uint8_t pin, uint16_t duty_cycle) {
   } else {
     // Shift by 4 to fit 12-bit register
     uint16_t value = duty_cycle >> 4;
-    buf_[1] = 0x00;
-    buf_[2] = 0x00;
-    buf_[3] = value & 0xFF;
-    buf_[4] = (value >> 8) & 0xFF;
+    buf_[1] = (uint8_t)0;
+    buf_[2] = (uint8_t)0;
+    buf_[3] = (uint8_t)(value & 0xFF);
+    buf_[4] = (uint8_t)((value >> 8) & 0xFF);
   }
 
   return write(i2c_fd_, buf_, 5) == 5;

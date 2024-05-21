@@ -1,6 +1,8 @@
-#pragma once
+#ifndef DIFF_ROBOT_CONTROL__I2C_DEVICE_HPP_
+#define DIFF_ROBOT_CONTROL__I2C_DEVICE_HPP_
 
 #include <cstdint>
+#include <mutex>
 #include <optional>
 
 
@@ -21,3 +23,4 @@ class I2CDevice {
   uint8_t buf_[10];
 };
 
+#endif  // JETBOT_CONTROL__I2C_DEVICE_HPP_

@@ -5,48 +5,19 @@
 
 #include "motor_control/i2c_device.hpp"
 #include "motor_control/motor.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "motor_control/motor_control.hpp"
+#include <rclcpp/rclcpp.hpp>
+#include <geometry_msgs/msg/twist.hpp>
 #include "std_msgs/msg/string.hpp"
 
-using namespace std::chrono_literals;
-
-class JetBotControlNode : public rclcpp::Node {
- public:
-  JetBotControlNode() : Node("jetbot_control_node"), spinning_(false) {
-    device_ptr_ = std::make_shared<I2CDevice>();
-    motor_1_ = Motor(device_ptr_, std::make_tuple(8, 9, 10), 1);
-    motor_2_ =
-        Motor(device_ptr_, std::make_tuple(13, 11, 12), 2);
-
-    publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-    timer_ = this->create_wall_timer(
-        500ms, std::bind(&JetBotControlNode::timer_callback, this));
-  }
-
- private:
-  void timer_callback() {
-    auto message = std_msgs::msg::String();
-    message.data = "Motors are spinning: " + std::to_string(spinning_);
-    motor_1_.trySetSpinning(spinning_);
-    motor_2_.trySetSpinning(spinning_);
-    RCLCPP_INFO(this->get_logger(), message.data.c_str());
-    publisher_->publish(message);
-
-    // Start/stop motors every callback
-    spinning_ = !spinning_;
-  }
-  rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-  bool spinning_;
-
-  std::shared_ptr<I2CDevice> device_ptr_;
-  Motor motor_1_;
-  Motor motor_2_;
-};
+void DiffRobotControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
+    float demand_velocity = msg->linear.x;
+    float demand_rotation = msg->angular.z;
+}
 
 int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<JetBotControlNode>());
+  rclcpp::spin(std::make_shared<DiffRobotControlNode>());
   rclcpp::shutdown();
   return 0;
 }
