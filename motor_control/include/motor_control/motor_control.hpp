@@ -14,7 +14,7 @@ class DiffRobotControlNode : public rclcpp::Node {
     public:
         DiffRobotControlNode() : Node("diff_control_node") {
             device_ptr_ = std::make_shared<I2CDevice>();
-            motor_1_ = Motor(device_ptr_, std::make_tuple(2, 3, 4), "2");
+            motor_1_ = Motor(device_ptr_, std::make_tuple(13, 12, 11), "2");
             motor_2_ = Motor(device_ptr_, std::make_tuple(8, 10, 9), "1");
             WHEEL_BASE = 0.1;
             WHEEL_RADIUS = 0.03;
