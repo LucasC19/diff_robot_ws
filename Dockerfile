@@ -6,6 +6,14 @@ SHELL ["/bin/bash", "-c"]
 # Update all packages
 RUN sudo apt update && sudo apt upgrade -y
 
+# Install ros packages
+RUN sudo apt install libudev-dev -y
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
+&& sudo apt-get update -y \
+&& sudo apt-get install ros-$ROS_DISTRO-diagnostic-updater \
+&& sudo apt install ros-$ROS_DISTRO-foxglove-bridge -y \
+&& sudo apt install ros-humble-rmw-cyclonedds-cpp -y 
+
 # Install Git
 RUN sudo apt install -y git
 
