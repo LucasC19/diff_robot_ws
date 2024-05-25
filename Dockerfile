@@ -12,6 +12,7 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
 && sudo apt-get update -y \
 && sudo apt-get install ros-$ROS_DISTRO-diagnostic-updater \
 && sudo apt install ros-$ROS_DISTRO-foxglove-bridge -y \
+&& sudo apt install ros-$ROS_DISTRO-navigation2 -y \
 && sudo apt install ros-humble-rmw-cyclonedds-cpp -y 
 
 # Install Git
