@@ -14,7 +14,7 @@ import xacro
 def generate_launch_description():
 
     # Ros2 Control Configuration
-    motor_control = Node(
+    motor_control_launch = Node(
         package="motor_control",
         executable="motor_control",
         output="screen",
@@ -43,7 +43,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            pubsub_launch,
+            motor_control_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
         ]
