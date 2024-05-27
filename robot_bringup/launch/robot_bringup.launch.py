@@ -13,6 +13,15 @@ import xacro
 
 def generate_launch_description():
 
+    foxglove_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(get_package_share_directory("foxglove_bridge"), "launch"),
+                "/foxglove_bridge_launch.xml",
+            ]
+        ),
+    ) 
+
     # Ros2 Control Configuration
     motor_control_launch = Node(
         package="motor_control",
@@ -49,6 +58,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            foxglove_launch,
             motor_control_launch,
             odometry_launch,
             twist_mux_launch,
