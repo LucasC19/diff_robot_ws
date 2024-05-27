@@ -10,6 +10,7 @@
 #include "motor_control/i2c_device.hpp"
 #include "motor_control/motor.hpp"
 #include "motor_control/motor_control.hpp"
+#include "motor_control/odometry.hpp"
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include "std_msgs/msg/string.hpp"
@@ -18,6 +19,7 @@ void DiffRobotControlNode::cmd_vel_callback(const geometry_msgs::msg::Twist::Sha
     std::vector<float> motor_velocity = cmd_vel_to_motor(msg);
     //RCLCPP_INFO(rclcpp::get_logger("rclcpp"), std::to_string(motor_velocity[0]));
     set_speed_limit(motor_velocity);
+    calculate_velocities(motor_velocity, this->WHEEL_BASE);
     motor_1_.trySetVelocity(motor_velocity[0]);
     motor_2_.trySetVelocity(motor_velocity[1]);
 
@@ -51,6 +53,14 @@ void DiffRobotControlNode::set_speed_limit(std::vector<float> &speed) {
     speed[1] /= scale;
   }
 }
+
+void DiffRobotControlNode::calculate_velocities(std::vector<float> const &motor_velocities, float const &WHEEL_BASE) {
+  geometry_msgs::msg::Twist velocities;
+  velocities.linear.x = (motor_velocities[0] + motor_velocities[1]) / 2;
+  velocities.angular.z = (motor_velocities[0] - motor_velocities[1]) / WHEEL_BASE;
+  this->velocities_publisher->publish(velocities);
+}
+
 int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<DiffRobotControlNode>());

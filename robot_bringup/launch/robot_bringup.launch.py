@@ -20,6 +20,12 @@ def generate_launch_description():
         output="screen",
     )
 
+    odometry_launch = Node(
+        package="motor_control",
+        executable="odometry",
+        output="screen",
+    )
+
     twist_mux_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -44,6 +50,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             motor_control_launch,
+            odometry_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
         ]

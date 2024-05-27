@@ -6,6 +6,7 @@
 
 #include "motor_control/i2c_device.hpp"
 #include "motor_control/motor.hpp"
+#include "motor_control/odometry.hpp"
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include "std_msgs/msg/string.hpp"
@@ -16,6 +17,7 @@ class DiffRobotControlNode : public rclcpp::Node {
             device_ptr_ = std::make_shared<I2CDevice>();
             motor_1_ = Motor(device_ptr_, std::make_tuple(13, 12, 11), "2");
             motor_2_ = Motor(device_ptr_, std::make_tuple(8, 10, 9), "1");
+            velocities_publisher = this->create_publisher<geometry_msgs::msg::Twist>("robot_velocities", 10);
             WHEEL_BASE = 0.1;
             WHEEL_RADIUS = 0.03;
             MAX_WHEEL_VELOCITY_RPM = 200.0;
@@ -29,8 +31,10 @@ class DiffRobotControlNode : public rclcpp::Node {
         std::vector<float> cmd_vel_to_motor(geometry_msgs::msg::Twist::SharedPtr velocity);
         void set_speed_limit(std::vector<float> &speed);
         float normalize_velocity(float const &velocity, float const &max_velocity);
+        void calculate_velocities(std::vector<float> const &motor_velocities, float const &WHEEL_BASE); 
 
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_;
+        rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr velocities_publisher;
         std::shared_ptr<I2CDevice> device_ptr_;
         Motor motor_1_;
         Motor motor_2_;
