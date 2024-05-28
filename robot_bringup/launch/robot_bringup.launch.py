@@ -6,6 +6,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from ament_index_python.packages import get_package_prefix
 from launch_ros.actions import Node
 import xacro
@@ -14,11 +15,11 @@ import xacro
 def generate_launch_description():
 
     foxglove_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                os.path.join(get_package_share_directory("foxglove_bridge"), "launch"),
-                "/foxglove_bridge_launch.xml",
-            ]
+        XMLLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory("foxglove_bridge"),
+                "launch/foxglove_bridge_launch.xml",
+            )
         ),
     ) 
 
@@ -33,6 +34,24 @@ def generate_launch_description():
         package="motor_control",
         executable="odometry",
         output="screen",
+    )
+
+    lidar_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(get_package_share_directory("ldlidar_node"), "launch"),
+                "/ldlidar_with_mgr.launch.py",
+            ]
+        ),
+    )
+    
+    ekf_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(get_package_share_directory("diff_robot_localization"), "launch"),
+                "/ekf.launch.py",
+            ]
+        ),
     )
 
     twist_mux_launch = IncludeLaunchDescription(
@@ -63,5 +82,7 @@ def generate_launch_description():
             odometry_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
+            ekf_launch,
+            lidar_launch,
         ]
     )

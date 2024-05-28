@@ -21,7 +21,7 @@ import launch.actions
 
 
 def generate_launch_description():
-    gps_wpf_dir = get_package_share_directory("robot_localization")
+    gps_wpf_dir = get_package_share_directory("diff_robot_localization")
     rl_params_file = os.path.join(gps_wpf_dir, "config", "ekf_params.yaml")
 
     return LaunchDescription(
