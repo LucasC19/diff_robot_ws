@@ -16,7 +16,8 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
 && sudo apt install ros-$ROS_DISTRO-nav2-util -y \
 && sudo apt install ros-$ROS_DISTRO-xacro -y \
 && sudo apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp -y  \
-&& sudo apt install ros-$ROS_DISTRO-robot-localization -y 
+&& sudo apt install ros-$ROS_DISTRO-robot-localization -y \
+&& sudo apt install ros-$ROS_DISTRO-slam-toolbox -y
 
 # Install Git
 RUN sudo apt install -y git

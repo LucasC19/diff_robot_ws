@@ -1,20 +1,16 @@
 <?xml version="1.0"?>
 <robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- <xacro:include filename="$(find puma2_description)/urdf/puma2.gazebo.xacro" /> -->
+  <!-- <xacro:include filename="$(find robot_description)/urdf/robot.gazebo.xacro" /> -->
 
   <xacro:property name="PI" value="3.1415926535897931"/>
 
 
 
   <xacro:property name="robot_mass" value="1" />
-  <xacro:property name="robot_internal_height" value="1.55" />
+  <xacro:property name="robot_internal_height" value="1" />
   <xacro:property name="steer_height" value="0.56" />
   <xacro:property name="gnss_relative_height" value="0.106" />
-  <xacro:property name="depth_cam_height" value="1.626" />
-  <xacro:property name="depth_cam_length" value="0.574" />
-  <xacro:property name="depth_cam_width" value="0.450" />
-  <xacro:property name="depth_cam_angle" value="${PI/6}" />
   <xacro:property name="width_between_wheel" value="0.9" />
   <xacro:property name="length_between_wheel" value="1.530" />
   <xacro:property name="wheel_mass" value="0.1" />
@@ -55,6 +51,8 @@
   <link name="base_link">
   </link>
 
+
+
   <!-- Body -->
 
       <!-- <material name="white"><color rgba="0.9 0.9 0.9 1.0" /></material> -->
@@ -67,14 +65,14 @@
     <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
   </xacro:wheel>
 
-  <!-- IMU -->
-  <!--<link name="imu_link">
+  <!-- Base Footprint -->
+  <link name="base_footprint">
   </link>
-  <joint name="chassis_to_imu_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 ${gnss_relative_height}" />
-    <parent link="chassis" />
-    <child link="imu_link" />
-  </joint>-->
+  <joint name="base_footprint_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="base_link" />
+    <child link="base_footprint" />
+  </joint>
 
 
   <!-- Lidar -->
