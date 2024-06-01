@@ -24,23 +24,32 @@ def generate_launch_description():
     ) 
 
     # Ros2 Control Configuration
-    motor_control_launch = Node(
-        package="motor_control",
-        executable="motor_control",
-        output="screen",
-    )
+    #motor_control_launch = Node(
+    #    package="motor_control",
+    #    executable="motor_control",
+    #    output="screen",
+    #)
 
-    odometry_launch = Node(
-        package="motor_control",
-        executable="odometry",
-        output="screen",
-    )
+    #odometry_launch = Node(
+    #    package="motor_control",
+    #    executable="odometry",
+    #    output="screen",
+    #)
 
     lidar_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
                 os.path.join(get_package_share_directory("ldlidar_node"), "launch"),
                 "/ldlidar_with_mgr.launch.py",
+            ]
+        ),
+    )
+
+    motor_control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(get_package_share_directory("jetbot_control"), "bringup", "launch"),
+                "/jetbot.launch.py",
             ]
         ),
     )
@@ -79,7 +88,7 @@ def generate_launch_description():
         [
             foxglove_launch,
             motor_control_launch,
-            odometry_launch,
+            #odometry_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
             ekf_launch,
