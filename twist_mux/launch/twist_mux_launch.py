@@ -55,8 +55,7 @@ def generate_launch_description():
                 package="twist_mux",
                 executable="twist_mux",
                 output="screen",
-                remappings={("/cmd_vel", LaunchConfiguration("cmd_vel_out")),
-                            ("/cmd_vel_out", "/jetbot_base_controller/cmd_vel")},
+                remappings={("/cmd_vel", LaunchConfiguration("cmd_vel_out"))},
                 parameters=[
                     {"use_sim_time": LaunchConfiguration("use_sim_time")},
                     LaunchConfiguration("config_locks"),

@@ -48,7 +48,7 @@ def generate_launch_description():
     motor_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
-                os.path.join(get_package_share_directory("jetbot_control"), "bringup", "launch"),
+                os.path.join(get_package_share_directory("jetbot_control"), "launch"),
                 "/jetbot.launch.py",
             ]
         ),
@@ -84,14 +84,25 @@ def generate_launch_description():
         'use_sim_time': False}]
     )
 
+    ###### Twist Stamper #######
+    twist_stamper_launch = Node(
+        package="twist_stamper",
+        executable="twist_stamper",
+        parameters=[{'use_sim_time':False}],
+        remappings=[('/cmd_vel_in','/cmd_vel_out'),
+                    ('/cmd_vel_out','/jetbot_base_controller/cmd_vel')]
+    )
+
+
     return LaunchDescription(
         [
-            foxglove_launch,
             motor_control_launch,
+            twist_stamper_launch,
             #odometry_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
             ekf_launch,
             lidar_launch,
+            foxglove_launch,
         ]
     )

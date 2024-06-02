@@ -7,12 +7,12 @@
       <xacro:unless value="${use_mock_hardware}">
         <hardware>
           <plugin>jetbot_control/JetBotSystemHardware</plugin>
-          <param name="pin_enable_0">13</param>
-          <param name="pin_pos_0">12</param>
-          <param name="pin_neg_0">11</param>
-          <param name="pin_enable_1">8</param>
-          <param name="pin_pos_1">10</param>
-          <param name="pin_neg_1">9</param>
+          <param name="pin_enable_0">8</param>
+          <param name="pin_pos_0">10</param>
+          <param name="pin_neg_0">9</param>
+          <param name="pin_enable_1">13</param>
+          <param name="pin_pos_1">12</param>
+          <param name="pin_neg_1">11</param>
         </hardware>
       </xacro:unless>
       <xacro:if value="${use_mock_hardware}">
