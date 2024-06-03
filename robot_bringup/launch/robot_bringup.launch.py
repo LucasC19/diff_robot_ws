@@ -101,7 +101,7 @@ def generate_launch_description():
             #odometry_launch,
             twist_mux_launch,
             robot_state_publisher_launch,
-            ekf_launch,
+            #ekf_launch,
             lidar_launch,
             foxglove_launch,
         ]
