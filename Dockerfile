@@ -19,8 +19,9 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
 && sudo apt install ros-$ROS_DISTRO-robot-localization -y \
 && sudo apt install ros-$ROS_DISTRO-slam-toolbox -y \
 && sudo apt install ros-$ROS_DISTRO-ros2-control -y \
-&& sudo apt install ros-$ROS_DISTRO-ros2-controllers -y \
-&& sudo apt install ros-humble-twist-stamper
+&& sudo apt install ros-$ROS_DISTRO-ros2-controllers -y
+
+RUN sudo apt install ros-humble-twist-stamper
 
 # Install Git
 RUN sudo apt install -y git

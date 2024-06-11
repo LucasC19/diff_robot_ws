@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 10  # Hz
+    update_rate: 30  # Hz
 
     jetbot_base_controller:
       type: diff_drive_controller/DiffDriveController
@@ -15,8 +15,8 @@ jetbot_base_controller:
     wheel_radius: 0.032
 
     wheel_separation_multiplier: 1.0
-    left_wheel_radius_multiplier: 1.0
-    right_wheel_radius_multiplier: 1.0
+    left_wheel_radius_multiplier: 20.0
+    right_wheel_radius_multiplier: 19.0
 
     publish_rate: 50.0
     odom_frame_id: odom
@@ -29,7 +29,7 @@ jetbot_base_controller:
     enable_odom_tf: true
 
     cmd_vel_timeout: 0.5
-    #publish_limited_velocity: true
+    publish_limited_velocity: true
     #velocity_rolling_window_size: 10
 
     # Velocity and acceleration limits
@@ -37,17 +37,17 @@ jetbot_base_controller:
     linear.x.has_velocity_limits: true
     linear.x.has_acceleration_limits: true
     linear.x.has_jerk_limits: false
-    linear.x.max_velocity: 0.064
-    linear.x.min_velocity: -0.064
-    linear.x.max_acceleration: 0.07
+    linear.x.max_velocity: 0.64
+    linear.x.min_velocity: -0.64
+    linear.x.max_acceleration: 0.7
     linear.x.max_jerk: 0.0
     linear.x.min_jerk: 0.0
 
     angular.z.has_velocity_limits: true
     angular.z.has_acceleration_limits: true
     angular.z.has_jerk_limits: false
-    angular.z.max_velocity: 0.025
-    angular.z.min_velocity: -0.025
+    angular.z.max_velocity: 0.25
+    angular.z.min_velocity: -0.25
     angular.z.max_acceleration: 1.0
     angular.z.min_acceleration: -1.0
     angular.z.max_jerk: 0.0
