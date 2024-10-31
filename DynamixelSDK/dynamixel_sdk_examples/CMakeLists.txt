@@ -14,6 +14,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(dynamixel_sdk REQUIRED)
 find_package(dynamixel_sdk_custom_interfaces REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 
 include_directories(include)
@@ -26,9 +27,18 @@ ament_target_dependencies(read_write_node
   rclcpp
 )
 
+add_executable(dynamixel_velocity_interface src/dynamixel_velocity_interface.cpp)
+ament_target_dependencies(dynamixel_velocity_interface
+  dynamixel_sdk_custom_interfaces
+  dynamixel_sdk
+  rclcpp
+  geometry_msgs
+)
+
 # Install
 install(TARGETS
   read_write_node
+  dynamixel_velocity_interface
   DESTINATION lib/${PROJECT_NAME}
 )
 
